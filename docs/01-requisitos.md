@@ -14,7 +14,7 @@ la v1) / **D** (deseable, solo si no compromete la simplicidad).
 | RF-5 | M | La búsqueda es insensible a mayúsculas, tildes y diéresis: `malamia` encuentra `Malamía`, `alora` encuentra `Casa de Álora`. |
 | RF-6 | M | La búsqueda por número acierta dentro de rangos: escribir `67` encuentra la caseta `66-67-68`. |
 | RF-7 | M | Cada resultado se muestra como una tarjeta con el nombre destacado, el número y la calle. |
-| RF-8 | M | Pulsar cualquier punto de la tarjeta abre Google Maps con la ruta en coche hacia las coordenadas de esa ubicación, según `docs/03-navegacion-maps.md`. |
+| RF-8 | M | Cada fila lleva a la derecha un **botón de navegar**, y es el único elemento pulsable de la fila. Al pulsarlo se abre Google Maps con la ruta en coche hacia las coordenadas de esa ubicación, según `docs/03-navegacion-maps.md`. El resto de la fila no reacciona: evita que un desplazamiento con el dedo lance el GPS por error. |
 | RF-9 | M | Con el campo vacío se muestra el listado completo, recorrible por desplazamiento. |
 | RF-10 | M | Si ningún resultado coincide, se indica con un mensaje claro y breve. |
 | RF-11 | M | Existe una forma evidente de borrar la búsqueda de un toque y volver al listado completo. |
@@ -46,14 +46,16 @@ ubicaciones visibles por pantalla frente a 11, lo que reduce el desplazamiento n
 para encontrar una caseta cuando se busca por nombre parcial.
 
 Queda registrado el riesgo asociado: con el vehículo en marcha y guantes puestos, una
-fila de 42 px (~0,9 cm) aumenta la probabilidad de pulsar la fila contigua. La mitigación
-es que las filas son contiguas y ocupan todo el ancho, de modo que no existen zonas
-muertas entre objetivos, y que el destino se confirma visualmente en Google Maps antes
-de arrancar.
+fila de 42 px (~0,9 cm) aumenta la probabilidad de activar la fila contigua.
 
-**Verificar en pruebas de campo.** Si se detectan pulsaciones erróneas con guantes, la
-decisión debe revisarse: es el único parámetro de diseño que puede provocar que la unidad
-salga hacia una caseta equivocada.
+**Mitigación adoptada (14/08/2026):** la fila dejó de ser pulsable. Solo lo es el botón
+de navegar de la derecha, de 64 px de ancho por los 42 px de alto de la fila. Esto elimina
+la activación accidental al desplazar la lista con el dedo, que era la vía real por la que
+un objetivo pequeño podía enviar a la unidad a una caseta equivocada. Ver RF-8.
+
+**Verificar en pruebas de campo.** Si aun así se detectan pulsaciones erróneas con
+guantes, revisar la altura de fila: sigue siendo el parámetro con más impacto sobre la
+precisión del destino.
 
 ## Fuera de alcance (v1)
 

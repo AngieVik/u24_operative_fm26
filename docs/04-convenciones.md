@@ -14,20 +14,50 @@ secciones marcadas *(a concretar)* se completarán cuando la decisión esté tom
 
 ```
 u24_operative_fm26/
-├── CLAUDE.md              Instrucciones permanentes
-├── data.md                Fuente de verdad. Solo lectura.
-├── docs/                  Documentación del proyecto
-│   ├── 00-contexto.md
-│   ├── 01-requisitos.md
-│   ├── 02-datos.md
-│   ├── 03-navegacion-maps.md
-│   └── 04-convenciones.md
-├── scripts/               Conversión de data.md a datos de aplicación
-└── src/                   Código de la aplicación (a concretar)
+├── CLAUDE.md                    Instrucciones permanentes
+├── data.md                      Fuente de verdad. Solo lectura.
+├── descripcion.md               Brief original
+│
+├── index.html                   ← GENERADO. No editar a mano.
+├── manifest.webmanifest         Manifiesto PWA
+├── sw.js                        Service worker
+├── icons/                       Iconos servidos (ver más abajo)
+│
+├── src/                         Fuentes de la aplicación
+│   ├── template.html            Plantilla: HTML, CSS y JS
+│   ├── logo.svg                 Emblema optimizado que se empotra
+│   └── fonts/roboto-*.woff2     Roboto subconjuntada
+│
+├── logo/                        Originales de marca. No se sirven.
+│   ├── Logo.svg                 Emblema vectorial original
+│   └── corporate_illustration.png
+│
+├── scripts/build.py             data.md + src/ → index.html
+└── docs/                        Documentación numerada
 ```
 
 Nombres de archivo y carpeta en `kebab-case`. Los documentos de `docs/` llevan prefijo
 numérico de dos dígitos para fijar el orden de lectura.
+
+### Regla de originales frente a derivados
+
+`logo/` guarda los originales de marca tal como los entregó el responsable y **no se
+modifican**. Lo que consume la aplicación son derivados generados a partir de ellos:
+`src/logo.svg` (optimizado, empotrado en el HTML) y los iconos de `icons/`. Si cambia la
+marca, se sustituye el original y se regeneran los derivados; nunca al revés.
+
+### Iconos servidos
+
+| Archivo | Uso |
+| --- | --- |
+| `icons/icon-192.png`, `icon-512.png` | Manifiesto, `purpose: any`. Emblema a sangre sobre `#141414`. |
+| `icons/icon-maskable-192.png`, `-512.png` | Manifiesto, `purpose: maskable`. Con zona de seguridad para que Android los recorte sin comerse el emblema. |
+| `icons/apple-touch-icon.png` | iOS, 180×180 y opaco: iOS no respeta la transparencia. |
+| `icons/favicon-32.png`, `-16.png` | Pestaña del navegador. |
+
+Los `icons/maskable_icon_x*.png` y `icons/Icons.js` son la entrega original del generador
+de iconos. Se conservan como referencia pero **el manifiesto no los referencia**; en
+particular `maskable_icon.png` pesa 7 MB y no debe servirse nunca.
 
 ## Nomenclatura en código
 

@@ -59,7 +59,10 @@ degradan cuando la app no está instalada y contradicen el principio de simplici
   Android, y permite pulsación larga para copiar o abrir en otra app.
 - `target="_blank"` con `rel="noopener noreferrer"`: la app queda abierta detrás, lista
   para el siguiente aviso, sin volver a cargar.
-- Toda la tarjeta es el enlace (RF-8), no solo un botón pequeño dentro de ella.
+- **Solo el botón de la derecha es el enlace. La fila no lo es** (RF-8). Con filas de
+  42 px y una lista de 125 elementos, una fila-enlace se activa sola al desplazar con el
+  dedo y lanza el GPS hacia una caseta equivocada. El botón mide 64 px de ancho por toda
+  la altura de la fila, bastante más que la píldora visible.
 
 ## Enlace de ubicación (opcional)
 

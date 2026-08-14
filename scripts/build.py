@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data.md"
 TEMPLATE = ROOT / "src" / "template.html"
 FONTS = ROOT / "src" / "fonts"
+LOGO = ROOT / "src" / "logo.svg"
 OUTPUT = ROOT / "index.html"
 
 FONT_WEIGHTS = (400, 500, 700)
@@ -63,6 +64,20 @@ def compact_label(label, numbers):
     if numbers != list(range(numbers[0], numbers[0] + len(numbers))):
         return label
     return f"{numbers[0]}–{numbers[-1]}"
+
+
+def read_logo():
+    """Emblema oficial, empotrado en línea para que index.html siga siendo
+    autocontenido y el logotipo no dependa de una petición de red."""
+    if not LOGO.exists():
+        fail(f"falta el logotipo {LOGO.relative_to(ROOT)}")
+    svg = LOGO.read_text(encoding="utf-8").strip()
+    if not svg.startswith("<svg"):
+        fail(f"{LOGO.relative_to(ROOT)} no empieza por <svg")
+    # Se marca como decorativo: el nombre lo da el texto contiguo.
+    return svg.replace(
+        "<svg", '<svg class="mark" role="img" aria-label="Emblema U24"', 1
+    )
 
 
 def read_fonts():
@@ -160,7 +175,7 @@ def main():
     numbers = check(locations)
 
     template = TEMPLATE.read_text(encoding="utf-8")
-    markers = ["__LOCATIONS__"] + [f"__FONT_{w}__" for w in FONT_WEIGHTS]
+    markers = ["__LOCATIONS__", "__LOGO__"] + [f"__FONT_{w}__" for w in FONT_WEIGHTS]
     for marker in markers:
         if marker not in template:
             fail(f"la plantilla no contiene el marcador {marker}")
@@ -169,8 +184,12 @@ def main():
     payload = json.dumps(locations, ensure_ascii=False, separators=(",", ":"))
 
     html = template.replace("__LOCATIONS__", payload)
+    html = html.replace("__LOGO__", read_logo())
     for weight, b64 in fonts.items():
         html = html.replace(f"__FONT_{weight}__", b64)
+
+    if "__" in html.replace("__", "", 0) and any(m in html for m in markers):
+        fail("han quedado marcadores sin sustituir en la salida")
 
     OUTPUT.write_text(html, encoding="utf-8", newline="\n")
 
@@ -189,6 +208,7 @@ def main():
     print(f"    sin numero: {', '.join(unnamed)}")
     print(f"    etiquetas abreviadas: {len(abbreviated)}")
     print(f"    fuentes empotradas: {len(FONT_WEIGHTS)} pesos")
+    print(f"    emblema empotrado: {LOGO.stat().st_size / 1024:.1f} KB")
     print(f"    tamano: {size / 1024:.1f} KB")
 
 

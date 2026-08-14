@@ -2,14 +2,18 @@
    Cachea la app completa en la instalación para que buscar funcione sin cobertura.
    Estrategia: cache-first para lo propio; la red solo se usa para actualizar. */
 
-const CACHE = 'u24-fm26-v1';
+const CACHE = 'u24-fm26-v2';
 const ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-maskable-512.png'
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-maskable-192.png',
+  './icons/icon-maskable-512.png',
+  './icons/apple-touch-icon.png',
+  './icons/favicon-32.png',
+  './icons/favicon-16.png'
 ];
 
 self.addEventListener('install', event => {
