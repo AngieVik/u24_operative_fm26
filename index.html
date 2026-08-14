@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>U24 · Feria de Málaga 2026</title>
+<meta name="description" content="Buscador de casetas del Real de la Feria de Málaga para el operativo U24.">
+<meta name="theme-color" content="#141414">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="U24 FM26">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23141414'/%3E%3Cg stroke='%23FFC72C' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 4v16M5 8l14 8M19 8L5 16'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+/* Roboto subconjuntado a los 109 caracteres que la app puede mostrar.
+   Empotrado para que funcione sin cobertura y sin peticiones a terceros. */
+@font-face{font-family:Roboto;font-style:normal;font-weight:400;font-display:block;
+  src:url(data:font/woff2;base64,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) format('woff2')}
+@font-face{font-family:Roboto;font-style:normal;font-weight:500;font-display:block;
+  src:url(data:font/woff2;base64,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) format('woff2')}
+@font-face{font-family:Roboto;font-style:normal;font-weight:700;font-display:block;
+  src:url(data:font/woff2;base64,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) format('woff2')}
+
+:root{
+  --bg:#141414;
+  --panel:#1A1A1A;
+  --field:#1C1C1C;
+  --row-active:#232323;
+  --rule:#242424;
+  --border:#2E2E2E;
+  --accent:#FFC72C;
+  --text:#F0F0F0;
+  --muted:#8C8C8C;
+  --icon:#7A7A7A;
+  --pad:16px;
+  --row:42px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg)}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Roboto,system-ui,sans-serif;
+  font-size:16px;line-height:1.2;
+  -webkit-font-smoothing:antialiased;
+  overscroll-behavior-y:none;
+}
+
+/* Iconos de trazo, familia lucide. Un único grosor en toda la app. */
+.ico{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Cabecera ─────────────────────────────────────── */
+.head{
+  position:sticky;top:0;z-index:10;background:var(--bg);
+  padding-top:env(safe-area-inset-top);
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  height:52px;padding:0 var(--pad);
+}
+.brand .mark{flex:none;width:22px;height:22px;color:var(--accent)}
+.brand .mark path{stroke-width:2}
+.brand .wm{
+  font-size:17px;font-weight:700;letter-spacing:.04em;color:var(--text);
+}
+.brand .sub{
+  font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);
+}
+.brand .sep{
+  width:1px;height:16px;background:var(--border);margin:0 2px;
+}
+
+/* ── Buscador ─────────────────────────────────────── */
+.search{padding:0 var(--pad) 12px}
+.field{
+  position:relative;display:flex;align-items:center;
+  background:var(--field);
+  border:1px solid var(--border);border-radius:10px;
+}
+.field:focus-within{border-color:var(--accent)}
+.field .ico.lead{
+  position:absolute;left:14px;width:19px;height:19px;
+  color:var(--icon);pointer-events:none;
+}
+.field:focus-within .ico.lead{color:var(--accent)}
+#q{
+  display:block;width:100%;height:52px;
+  padding:0 52px 0 43px;
+  background:none;border:0;outline:none;border-radius:10px;
+  font-family:inherit;font-size:19px;font-weight:500;color:var(--text);
+  letter-spacing:.01em;
+}
+#clear{
+  position:absolute;right:2px;
+  width:48px;height:48px;display:none;place-items:center;
+  background:none;border:0;padding:0;color:var(--icon);cursor:pointer;
+}
+#clear .ico{width:18px;height:18px}
+#clear:active{color:var(--text)}
+body.has-query #clear{display:grid}
+
+.meta{
+  display:flex;align-items:center;gap:7px;
+  height:28px;padding:0 var(--pad);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  background:var(--panel);
+  font-size:10.5px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);
+}
+.meta b{color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ── Filas ────────────────────────────────────────── */
+ul{list-style:none;margin:0;padding:0}
+
+.row{
+  display:flex;align-items:center;
+  height:var(--row);padding:0 var(--pad);
+  border-bottom:1px solid var(--rule);
+  color:inherit;text-decoration:none;
+}
+.row:active{background:var(--row-active)}
+.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* Ancho fijo: los nombres deben alinearse en columna aunque el número
+   sea "3" o "180–186". 80px cubre la etiqueta más larga posible. */
+.num{
+  flex:none;width:80px;padding-right:8px;
+  font-size:15px;font-weight:700;
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;
+  color:var(--accent);
+}
+.num.sn{font-size:13px;letter-spacing:.06em;color:var(--muted)}
+
+.nom{
+  flex:1;min-width:0;
+  font-size:16.5px;font-weight:500;letter-spacing:.005em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+.row .nav{
+  flex:none;width:19px;height:19px;margin-left:12px;
+  color:var(--icon);
+}
+.row:active .nav{color:var(--accent)}
+
+/* ── Sin resultados ───────────────────────────────── */
+.none{display:none;padding:24px var(--pad);color:var(--muted);font-size:13.5px}
+.none b{display:block;color:var(--text);font-size:15px;font-weight:500;margin-bottom:5px}
+body.no-results .none{display:block}
+body.no-results ul{display:none}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (min-width:600px){
+  .head,ul,.none{max-width:560px;margin-inline:auto}
+  ul,.none{border-inline:1px solid var(--rule)}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="brand">
+    <svg class="ico mark" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9"/>
+    </svg>
+    <span class="wm">U24</span>
+    <span class="sep" aria-hidden="true"></span>
+    <span class="sub">Servicios Sanitarios · FM26</span>
+  </div>
+
+  <div class="search">
+    <div class="field">
+      <svg class="ico lead" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7.5"/><path d="M20.5 20.5l-4.2-4.2"/>
+      </svg>
+      <input id="q" type="text"
+             autocomplete="off" autocorrect="off" autocapitalize="off"
+             spellcheck="false" inputmode="search" enterkeyhint="search"
+             aria-label="Buscar caseta por nombre o número" aria-controls="list" autofocus>
+      <button id="clear" type="button" aria-label="Borrar búsqueda">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <p class="meta" id="meta" role="status" aria-live="polite"></p>
+</header>
+
+<main>
+  <ul id="list"></ul>
+  <div class="none">
+    <b>Sin coincidencias</b>
+    Comprueba el número o escribe menos letras del nombre.
+  </div>
+</main>
+
+<script>
+/* Datos generados desde data.md por scripts/build.py — no editar a mano. */
+const LOCATIONS = [{"id":"loc-000","label":"1-2","display":"1-2","numbers":[1,2],"name":"Asociación de Feriantes de Málaga","street":"C/ Antonio Rodríguez Sánchez","lat":"36.701673","lon":"-4.462155","search":"asociacion de feriantes de malaga 1-2","nameSearch":"asociacion de feriantes de malaga"},{"id":"loc-001","label":"3","display":"3","numbers":[3],"name":"El Revuelo","street":"C/ Antonio Rodríguez Sánchez","lat":"36.701776","lon":"-4.462225","search":"el revuelo 3","nameSearch":"el revuelo"},{"id":"loc-002","label":"4","display":"4","numbers":[4],"name":"Peña Caballista Monteclaro","street":"C/ Antonio Rodríguez Sánchez","lat":"36.701854","lon":"-4.462273","search":"pena caballista monteclaro 4","nameSearch":"pena caballista monteclaro"},{"id":"loc-003","label":"5","display":"5","numbers":[5],"name":"Lulú","street":"C/ Antonio Rodríguez Sánchez","lat":"36.701948","lon":"-4.462316","search":"lulu 5","nameSearch":"lulu"},{"id":"loc-004","label":"6","display":"6","numbers":[6],"name":"El Ruedo","street":"C/ Antonio Rodríguez Sánchez","lat":"36.702028","lon":"-4.462353","search":"el ruedo 6","nameSearch":"el ruedo"},{"id":"loc-005","label":"7-8","display":"7-8","numbers":[7,8],"name":"Peña Rincón de Calle Ancha","street":"C/ Antonio Rodríguez Sánchez","lat":"36.702145","lon":"-4.462436","search":"pena rincon de calle ancha 7-8","nameSearch":"pena rincon de calle ancha"},{"id":"loc-006","label":"9","display":"9","numbers":[9],"name":"Peña Martiricos","street":"C/ Antonio Rodríguez Sánchez","lat":"36.702273","lon":"-4.462508","search":"pena martiricos 9","nameSearch":"pena martiricos"},{"id":"loc-007","label":"10","display":"10","numbers":[10],"name":"Treinta Amigos","street":"C/ Antonio Rodríguez Sánchez","lat":"36.702358","lon":"-4.462564","search":"treinta amigos 10","nameSearch":"treinta amigos"},{"id":"loc-008","label":"11-12","display":"11-12","numbers":[11,12],"name":"Peña Recreativa Palestina","street":"C/ Antonio Rodríguez Sánchez","lat":"36.702716","lon":"-4.462774","search":"pena recreativa palestina 11-12","nameSearch":"pena recreativa palestina"},{"id":"loc-009","label":"13-14","display":"13-14","numbers":[13,14],"name":"Peña Portada alta","street":"C/ Antonio Rodríguez Sánchez","lat":"36.702887","lon":"-4.462855","search":"pena portada alta 13-14","nameSearch":"pena portada alta"},{"id":"loc-010","label":"15","display":"15","numbers":[15],"name":"Calle Larios 15","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703009","lon":"-4.462932","search":"calle larios 15 15","nameSearch":"calle larios 15"},{"id":"loc-011","label":"16","display":"16","numbers":[16],"name":"Olé","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703087","lon":"-4.462972","search":"ole 16","nameSearch":"ole"},{"id":"loc-012","label":"17-18","display":"17-18","numbers":[17,18],"name":"Alboroto Adn","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703209","lon":"-4.463050","search":"alboroto adn 17-18","nameSearch":"alboroto adn"},{"id":"loc-013","label":"19-20","display":"19-20","numbers":[19,20],"name":"La Tajá - Antigua Amigos del Abuelo Ventura","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703612","lon":"-4.463280","search":"la taja - antigua amigos del abuelo ventura 19-20","nameSearch":"la taja - antigua amigos del abuelo ventura"},{"id":"loc-014","label":"21-22","display":"21-22","numbers":[21,22],"name":"Grupo La Reserva","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703772","lon":"-4.463375","search":"grupo la reserva 21-22","nameSearch":"grupo la reserva"},{"id":"loc-015","label":"23-24","display":"23-24","numbers":[23,24],"name":"Peña Er Salero","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703941","lon":"-4.463466","search":"pena er salero 23-24","nameSearch":"pena er salero"},{"id":"loc-016","label":"25-26","display":"25-26","numbers":[25,26],"name":"La Canasta","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704104","lon":"-4.463569","search":"la canasta 25-26","nameSearch":"la canasta"},{"id":"loc-017","label":"27-28","display":"27-28","numbers":[27,28],"name":"Federación Malagueña de Peñas","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704510","lon":"-4.463804","search":"federacion malaguena de penas 27-28","nameSearch":"federacion malaguena de penas"},{"id":"loc-018","label":"29-30","display":"29-30","numbers":[29,30],"name":"El Pimpi","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704682","lon":"-4.463900","search":"el pimpi 29-30","nameSearch":"el pimpi"},{"id":"loc-019","label":"31","display":"31","numbers":[31],"name":"San Miguel","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704798","lon":"-4.463967","search":"san miguel 31","nameSearch":"san miguel"},{"id":"loc-020","label":"32-33-34","display":"32–34","numbers":[32,33,34],"name":"Ptv Málaga","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704960","lon":"-4.464064","search":"ptv malaga 32-33-34","nameSearch":"ptv malaga"},{"id":"loc-021","label":"35-36","display":"35-36","numbers":[35,36],"name":"Amigos de Los Mimbrales","street":"C/ Antonio Rodríguez Sánchez","lat":"36.705404","lon":"-4.464327","search":"amigos de los mimbrales 35-36","nameSearch":"amigos de los mimbrales"},{"id":"loc-022","label":"37-38","display":"37-38","numbers":[37,38],"name":"Le Grand Perchelera","street":"C/ Antonio Rodríguez Sánchez","lat":"36.705572","lon":"-4.464415","search":"le grand perchelera 37-38","nameSearch":"le grand perchelera"},{"id":"loc-023","label":"43","display":"43","numbers":[43],"name":"La Bulla","street":"C/ Peñista Rafael Fuentes","lat":"36.701843","lon":"-4.461482","search":"la bulla 43","nameSearch":"la bulla"},{"id":"loc-024","label":"44","display":"44","numbers":[44],"name":"La Marquesa Central Ciudadana","street":"C/ Peñista Rafael Fuentes","lat":"36.701923","lon":"-4.461555","search":"la marquesa central ciudadana 44","nameSearch":"la marquesa central ciudadana"},{"id":"loc-025","label":"45-46","display":"45-46","numbers":[45,46],"name":"CC.OO Málaga","street":"C/ Peñista Rafael Fuentes","lat":"36.702048","lon":"-4.461609","search":"cc.oo malaga 45-46","nameSearch":"cc.oo malaga"},{"id":"loc-026","label":"47-48","display":"47-48","numbers":[47,48],"name":"La Mascarada","street":"C/ Peñista Rafael Fuentes","lat":"36.702206","lon":"-4.461728","search":"la mascarada 47-48","nameSearch":"la mascarada"},{"id":"loc-027","label":"49-50","display":"49-50","numbers":[49,50],"name":"Peña Atlético Portada alta","street":"C/ Peñista Rafael Fuentes","lat":"36.702368","lon":"-4.461817","search":"pena atletico portada alta 49-50","nameSearch":"pena atletico portada alta"},{"id":"loc-028","label":"51-52","display":"51-52","numbers":[51,52],"name":"Amigos del Abuelo Ventura","street":"C/ Peñista Rafael Fuentes","lat":"36.702537","lon":"-4.461915","search":"amigos del abuelo ventura 51-52","nameSearch":"amigos del abuelo ventura"},{"id":"loc-029","label":"53-54","display":"53-54","numbers":[53,54],"name":"Avoi","street":"C/ Peñista Rafael Fuentes","lat":"36.702942","lon":"-4.462137","search":"avoi 53-54","nameSearch":"avoi"},{"id":"loc-030","label":"55-56","display":"55-56","numbers":[55,56],"name":"Centro Cultural Renfe","street":"C/ Peñista Rafael Fuentes","lat":"36.703133","lon":"-4.462250","search":"centro cultural renfe 55-56","nameSearch":"centro cultural renfe"},{"id":"loc-031","label":"57","display":"57","numbers":[57],"name":"A.C.R. Ciclista Costa de Málaga","street":"C/ Peñista Rafael Fuentes","lat":"36.703231","lon":"-4.462303","search":"a.c.r. ciclista costa de malaga 57","nameSearch":"a.c.r. ciclista costa de malaga"},{"id":"loc-032","label":"58-59-60","display":"58–60","numbers":[58,59,60],"name":"Casa de Álora-Cosa Nuestra","street":"C/ Peñista Rafael Fuentes","lat":"36.703407","lon":"-4.462388","search":"casa de alora-cosa nuestra 58-59-60","nameSearch":"casa de alora-cosa nuestra"},{"id":"loc-033","label":"61-62","display":"61-62","numbers":[61,62],"name":"Peña Los Ángeles","street":"C/ Peñista Rafael Fuentes","lat":"36.703845","lon":"-4.462669","search":"pena los angeles 61-62","nameSearch":"pena los angeles"},{"id":"loc-034","label":"63-64","display":"63-64","numbers":[63,64],"name":"La Exquisita","street":"C/ Peñista Rafael Fuentes","lat":"36.704007","lon":"-4.462756","search":"la exquisita 63-64","nameSearch":"la exquisita"},{"id":"loc-035","label":"65","display":"65","numbers":[65],"name":"Ágape","street":"C/ Peñista Rafael Fuentes","lat":"36.704122","lon":"-4.462821","search":"agape 65","nameSearch":"agape"},{"id":"loc-036","label":"66-67-68","display":"66–68","numbers":[66,67,68],"name":"El Sarao","street":"C/ Peñista Rafael Fuentes","lat":"36.704300","lon":"-4.462917","search":"el sarao 66-67-68","nameSearch":"el sarao"},{"id":"loc-037","label":"69-70","display":"69-70","numbers":[69,70],"name":"D´mare Café del Mar","street":"C/ Peñista Rafael Fuentes","lat":"36.704749","lon":"-4.463170","search":"d´mare cafe del mar 69-70","nameSearch":"d´mare cafe del mar"},{"id":"loc-038","label":"71-72","display":"71-72","numbers":[71,72],"name":"Badhak","street":"C/ Peñista Rafael Fuentes","lat":"36.704913","lon":"-4.463262","search":"badhak 71-72","nameSearch":"badhak"},{"id":"loc-039","label":"73","display":"73","numbers":[73],"name":"Puerto 10 La Favela","street":"C/ Peñista Rafael Fuentes","lat":"36.705038","lon":"-4.463328","search":"puerto 10 la favela 73","nameSearch":"puerto 10 la favela"},{"id":"loc-040","label":"74","display":"74","numbers":[74],"name":"Aa.Vv. 13 de Noviembre “Los Prados”","street":"C/ Peñista Rafael Fuentes","lat":"36.705110","lon":"-4.463381","search":"aa.vv. 13 de noviembre “los prados” 74","nameSearch":"aa.vv. 13 de noviembre “los prados”"},{"id":"loc-041","label":"75-76","display":"75-76","numbers":[75,76],"name":"La Mami Caseta 5º Pino","street":"C/ Peñista Rafael Fuentes","lat":"36.705237","lon":"-4.463454","search":"la mami caseta 5º pino 75-76","nameSearch":"la mami caseta 5º pino"},{"id":"loc-042","label":"77","display":"77","numbers":[77],"name":"El Patio de Liceo","street":"C/ Peñista Rafael Fuentes","lat":"36.705605","lon":"-4.463665","search":"el patio de liceo 77","nameSearch":"el patio de liceo"},{"id":"loc-043","label":"78","display":"78","numbers":[78],"name":"UGT-Casa del Pueblo","street":"C/ Peñista Rafael Fuentes","lat":"36.705684","lon":"-4.463726","search":"ugt-casa del pueblo 78","nameSearch":"ugt-casa del pueblo"},{"id":"loc-044","label":"79-80","display":"79-80","numbers":[79,80],"name":"Tentadero","street":"C/ Peñista Rafael Fuentes","lat":"36.705807","lon":"-4.463789","search":"tentadero 79-80","nameSearch":"tentadero"},{"id":"loc-045","label":"85-86","display":"85-86","numbers":[85,86],"name":"Colmao","street":"C/ Peñista Rafael Fuentes","lat":"36.701943","lon":"-4.461344","search":"colmao 85-86","nameSearch":"colmao"},{"id":"loc-046","label":"87-88-89","display":"87–89","numbers":[87,88,89],"name":"Peña Santa Cristina","street":"C/ Peñista Rafael Fuentes","lat":"36.702146","lon":"-4.461462","search":"pena santa cristina 87-88-89","nameSearch":"pena santa cristina"},{"id":"loc-047","label":"90-91","display":"90-91","numbers":[90,91],"name":"Peña Cortijo de Torres","street":"C/ Peñista Rafael Fuentes","lat":"36.702368","lon":"-4.461585","search":"pena cortijo de torres 90-91","nameSearch":"pena cortijo de torres"},{"id":"loc-048","label":"92","display":"92","numbers":[92],"name":"Peña Malaguista Personas Sordas","street":"C/ Peñista Rafael Fuentes","lat":"36.702489","lon":"-4.461657","search":"pena malaguista personas sordas 92","nameSearch":"pena malaguista personas sordas"},{"id":"loc-049","label":"93-94","display":"93-94","numbers":[93,94],"name":"Peña El Bastón","street":"C/ Peñista Rafael Fuentes","lat":"36.702609","lon":"-4.461735","search":"pena el baston 93-94","nameSearch":"pena el baston"},{"id":"loc-050","label":"95-96","display":"95-96","numbers":[95,96],"name":"Peña El Parral","street":"C/ Peñista Rafael Fuentes","lat":"36.703014","lon":"-4.461958","search":"pena el parral 95-96","nameSearch":"pena el parral"},{"id":"loc-051","label":"97","display":"97","numbers":[97],"name":"Burguer Mi Barrio","street":"C/ Peñista Rafael Fuentes","lat":"36.703143","lon":"-4.462026","search":"burguer mi barrio 97","nameSearch":"burguer mi barrio"},{"id":"loc-052","label":"98-99","display":"98-99","numbers":[98,99],"name":"Peña Tiro de Pichón","street":"C/ Peñista Rafael Fuentes","lat":"36.703267","lon":"-4.462101","search":"pena tiro de pichon 98-99","nameSearch":"pena tiro de pichon"},{"id":"loc-053","label":"100-101-102","display":"100–102","numbers":[100,101,102],"name":"Peña La Paz","street":"C/ Peñista Rafael Fuentes","lat":"36.703473","lon":"-4.462223","search":"pena la paz 100-101-102","nameSearch":"pena la paz"},{"id":"loc-054","label":"103-104","display":"103-104","numbers":[103,104],"name":"Clandestino","street":"C/ Peñista Rafael Fuentes","lat":"36.703923","lon":"-4.462481","search":"clandestino 103-104","nameSearch":"clandestino"},{"id":"loc-055","label":"105-106","display":"105-106","numbers":[105,106],"name":"Casa de Melilla","street":"C/ Peñista Rafael Fuentes","lat":"36.704084","lon":"-4.462574","search":"casa de melilla 105-106","nameSearch":"casa de melilla"},{"id":"loc-056","label":"107-108","display":"107-108","numbers":[107,108],"name":"Malamía","street":"C/ Peñista Rafael Fuentes","lat":"36.704256","lon":"-4.462676","search":"malamia 107-108","nameSearch":"malamia"},{"id":"loc-057","label":"109-110","display":"109-110","numbers":[109,110],"name":"Casa Lola-Tennessee","street":"C/ Peñista Rafael Fuentes","lat":"36.704410","lon":"-4.462761","search":"casa lola-tennessee 109-110","nameSearch":"casa lola-tennessee"},{"id":"loc-058","label":"111-112","display":"111-112","numbers":[111,112],"name":"El Embrujo","street":"C/ Peñista Rafael Fuentes","lat":"36.704816","lon":"-4.463001","search":"el embrujo 111-112","nameSearch":"el embrujo"},{"id":"loc-059","label":"113-114","display":"113-114","numbers":[113,114],"name":"Teatro Gallery","street":"C/ Peñista Rafael Fuentes","lat":"36.704983","lon":"-4.463088","search":"teatro gallery 113-114","nameSearch":"teatro gallery"},{"id":"loc-060","label":"115","display":"115","numbers":[115],"name":"Caramelo","street":"C/ Peñista Rafael Fuentes","lat":"36.705103","lon":"-4.463160","search":"caramelo 115","nameSearch":"caramelo"},{"id":"loc-061","label":"116","display":"116","numbers":[116],"name":"Fomo Club","street":"C/ Peñista Rafael Fuentes","lat":"36.705188","lon":"-4.463212","search":"fomo club 116","nameSearch":"fomo club"},{"id":"loc-062","label":"117-118","display":"117-118","numbers":[117,118],"name":"Los Claveles","street":"C/ Peñista Rafael Fuentes","lat":"36.705307","lon":"-4.463284","search":"los claveles 117-118","nameSearch":"los claveles"},{"id":"loc-063","label":"119-120-121","display":"119–121","numbers":[119,120,121],"name":"La Feria de Candela","street":"C/ Peñista Rafael Fuentes","lat":"36.705759","lon":"-4.463559","search":"la feria de candela 119-120-121","nameSearch":"la feria de candela"},{"id":"loc-064","label":"122-123-124","display":"122–124","numbers":[122,123,124],"name":"La Huella de Malafama","street":"C/ Peñista Rafael Fuentes","lat":"36.706002","lon":"-4.463684","search":"la huella de malafama 122-123-124","nameSearch":"la huella de malafama"},{"id":"loc-065","label":"125-126","display":"125-126","numbers":[125,126],"name":"Maya / Antigua Gold","street":"C/ Peñista Rafael Fuentes","lat":"36.706204","lon":"-4.463806","search":"maya / antigua gold 125-126","nameSearch":"maya / antigua gold"},{"id":"loc-066","label":"127-128","display":"127-128","numbers":[127,128],"name":"Peña El Parchís","street":"C/ José Blánquez 'El Maño'","lat":"36.702188","lon":"-4.460701","search":"pena el parchis 127-128","nameSearch":"pena el parchis"},{"id":"loc-067","label":"129-130","display":"129-130","numbers":[129,130],"name":"Peña La Solera","street":"C/ José Blánquez 'El Maño'","lat":"36.702352","lon":"-4.460805","search":"pena la solera 129-130","nameSearch":"pena la solera"},{"id":"loc-068","label":"131","display":"131","numbers":[131],"name":"Cambala","street":"C/ José Blánquez 'El Maño'","lat":"36.702472","lon":"-4.460885","search":"cambala 131","nameSearch":"cambala"},{"id":"loc-069","label":"132","display":"132","numbers":[132],"name":"El Carmen","street":"C/ José Blánquez 'El Maño'","lat":"36.702551","lon":"-4.460938","search":"el carmen 132","nameSearch":"el carmen"},{"id":"loc-070","label":"133-134","display":"133-134","numbers":[133,134],"name":"Selvática","street":"C/ José Blánquez 'El Maño'","lat":"36.702664","lon":"-4.461009","search":"selvatica 133-134","nameSearch":"selvatica"},{"id":"loc-071","label":"135","display":"135","numbers":[135],"name":"Koloa","street":"C/ José Blánquez 'El Maño'","lat":"36.702798","lon":"-4.461084","search":"koloa 135","nameSearch":"koloa"},{"id":"loc-072","label":"136","display":"136","numbers":[136],"name":"María Diabla","street":"C/ José Blánquez 'El Maño'","lat":"36.702875","lon":"-4.461133","search":"maria diabla 136","nameSearch":"maria diabla"},{"id":"loc-073","label":"137-138","display":"137-138","numbers":[137,138],"name":"Coltán Con Acento Bianco","street":"C/ José Blánquez 'El Maño'","lat":"36.703249","lon":"-4.461329","search":"coltan con acento bianco 137-138","nameSearch":"coltan con acento bianco"},{"id":"loc-074","label":"139","display":"139","numbers":[139],"name":"El Andén","street":"C/ José Blánquez 'El Maño'","lat":"36.703366","lon":"-4.461423","search":"el anden 139","nameSearch":"el anden"},{"id":"loc-075","label":"140","display":"140","numbers":[140],"name":"El Patio de Antojo","street":"C/ José Blánquez 'El Maño'","lat":"36.703454","lon":"-4.461462","search":"el patio de antojo 140","nameSearch":"el patio de antojo"},{"id":"loc-076","label":"141-142","display":"141-142","numbers":[141,142],"name":"Arte","street":"C/ José Blánquez 'El Maño'","lat":"36.703569","lon":"-4.461533","search":"arte 141-142","nameSearch":"arte"},{"id":"loc-077","label":"143-144","display":"143-144","numbers":[143,144],"name":"El Callejón del Señorío","street":"C/ José Blánquez 'El Maño'","lat":"36.703741","lon":"-4.461632","search":"el callejon del senorio 143-144","nameSearch":"el callejon del senorio"},{"id":"loc-078","label":"145-146","display":"145-146","numbers":[145,146],"name":"Touché","street":"C/ José Blánquez 'El Maño'","lat":"36.704149","lon":"-4.461850","search":"touche 145-146","nameSearch":"touche"},{"id":"loc-079","label":"147","display":"147","numbers":[147],"name":"La Conga","street":"C/ José Blánquez 'El Maño'","lat":"36.704268","lon":"-4.461927","search":"la conga 147","nameSearch":"la conga"},{"id":"loc-080","label":"148","display":"148","numbers":[148],"name":"Sala Rey de Copas","street":"C/ José Blánquez 'El Maño'","lat":"36.704352","lon":"-4.461969","search":"sala rey de copas 148","nameSearch":"sala rey de copas"},{"id":"loc-081","label":"149-150","display":"149-150","numbers":[149,150],"name":"Jaleo","street":"C/ José Blánquez 'El Maño'","lat":"36.704478","lon":"-4.462042","search":"jaleo 149-150","nameSearch":"jaleo"},{"id":"loc-082","label":"151","display":"151","numbers":[151],"name":"El Tinglao","street":"C/ José Blánquez 'El Maño'","lat":"36.704608","lon":"-4.462105","search":"el tinglao 151","nameSearch":"el tinglao"},{"id":"loc-083","label":"152","display":"152","numbers":[152],"name":"La Ruina","street":"C/ José Blánquez 'El Maño'","lat":"36.704678","lon":"-4.462163","search":"la ruina 152","nameSearch":"la ruina"},{"id":"loc-084","label":"153","display":"153","numbers":[153],"name":"Velvet","street":"C/ José Blánquez 'El Maño'","lat":"36.704998","lon":"-4.462354","search":"velvet 153","nameSearch":"velvet"},{"id":"loc-085","label":"154-155","display":"154-155","numbers":[154,155],"name":"Sindicato de Estudiantes-Libres Y Combativas","street":"C/ José Blánquez 'El Maño'","lat":"36.705128","lon":"-4.462431","search":"sindicato de estudiantes-libres y combativas 154-155","nameSearch":"sindicato de estudiantes-libres y combativas"},{"id":"loc-086","label":"156","display":"156","numbers":[156],"name":"El Militante-Izquierda Revolucionaria","street":"C/ José Blánquez 'El Maño'","lat":"36.705246","lon":"-4.462486","search":"el militante-izquierda revolucionaria 156","nameSearch":"el militante-izquierda revolucionaria"},{"id":"loc-087","label":"157","display":"157","numbers":[157],"name":"La Pija","street":"C/ José Blánquez 'El Maño'","lat":"36.705328","lon":"-4.462538","search":"la pija 157","nameSearch":"la pija"},{"id":"loc-088","label":"158","display":"158","numbers":[158],"name":"La Rumba","street":"C/ José Blánquez 'El Maño'","lat":"36.705418","lon":"-4.462585","search":"la rumba 158","nameSearch":"la rumba"},{"id":"loc-089","label":"159","display":"159","numbers":[159],"name":"Colega","street":"C/ José Blánquez 'El Maño'","lat":"36.705497","lon":"-4.462641","search":"colega 159","nameSearch":"colega"},{"id":"loc-090","label":"160","display":"160","numbers":[160],"name":"Lunares","street":"C/ José Blánquez 'El Maño'","lat":"36.705576","lon":"-4.462688","search":"lunares 160","nameSearch":"lunares"},{"id":"loc-091","label":"161-162","display":"161-162","numbers":[161,162],"name":"El Palmeo","street":"C/ José Blánquez 'El Maño'","lat":"36.705950","lon":"-4.462868","search":"el palmeo 161-162","nameSearch":"el palmeo"},{"id":"loc-092","label":"163","display":"163","numbers":[163],"name":"La Gringa de Feria","street":"C/ José Blánquez 'El Maño'","lat":"36.706073","lon":"-4.462933","search":"la gringa de feria 163","nameSearch":"la gringa de feria"},{"id":"loc-093","label":"164","display":"164","numbers":[164],"name":"Elixir Malasaña","street":"C/ José Blánquez 'El Maño'","lat":"36.706162","lon":"-4.462990","search":"elixir malasana 164","nameSearch":"elixir malasana"},{"id":"loc-094","label":"165","display":"165","numbers":[165],"name":"Recreo","street":"C/ José Blánquez 'El Maño'","lat":"36.706242","lon":"-4.463033","search":"recreo 165","nameSearch":"recreo"},{"id":"loc-095","label":"166","display":"166","numbers":[166],"name":"Reinas","street":"C/ José Blánquez 'El Maño'","lat":"36.706322","lon":"-4.463085","search":"reinas 166","nameSearch":"reinas"},{"id":"loc-096","label":"167","display":"167","numbers":[167],"name":"Grupo Maná","street":"C/ José Blánquez 'El Maño'","lat":"36.706405","lon":"-4.463130","search":"grupo mana 167","nameSearch":"grupo mana"},{"id":"loc-097","label":"168","display":"168","numbers":[168],"name":"Monkey","street":"C/ José Blánquez 'El Maño'","lat":"36.706490","lon":"-4.463178","search":"monkey 168","nameSearch":"monkey"},{"id":"loc-098","label":"169-170-171","display":"169–171","numbers":[169,170,171],"name":"La Carreta","street":"C/ Antonio Rodríguez Sánchez","lat":"36.702361","lon":"-4.462765","search":"la carreta 169-170-171","nameSearch":"la carreta"},{"id":"loc-099","label":"172-173-174","display":"172–174","numbers":[172,173,174],"name":"La Sal Y El Son","street":"C/ Antonio Rodríguez Sánchez","lat":"36.702612","lon":"-4.462917","search":"la sal y el son 172-173-174","nameSearch":"la sal y el son"},{"id":"loc-100","label":"175","display":"175","numbers":[175],"name":"Caseta de Información","street":"C/ Antonio Rodríguez Sánchez","lat":"36.702769","lon":"-4.462999","search":"caseta de informacion 175","nameSearch":"caseta de informacion"},{"id":"loc-101","label":"176-177-178-179","display":"176–179","numbers":[176,177,178,179],"name":"Caseta Municipal del Flamenco Y La Copla","street":"C/ Antonio Rodríguez Sánchez","lat":"36.702972","lon":"-4.463124","search":"caseta municipal del flamenco y la copla 176-177-178-179","nameSearch":"caseta municipal del flamenco y la copla"},{"id":"loc-102","label":"180-181-182-183-184-185-186","display":"180–186","numbers":[180,181,182,183,184,185,186],"name":"Caseta Municipal del Mayor “El Renge”","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703311","lon":"-4.463426","search":"caseta municipal del mayor “el renge” 180-181-182-183-184-185-186","nameSearch":"caseta municipal del mayor “el renge”"},{"id":"loc-103","label":"187","display":"187","numbers":[187],"name":"El Zaguán de Pepe Higo","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703752","lon":"-4.463573","search":"el zaguan de pepe higo 187","nameSearch":"el zaguan de pepe higo"},{"id":"loc-104","label":"188","display":"188","numbers":[188],"name":"Los Polillas","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703834","lon":"-4.463616","search":"los polillas 188","nameSearch":"los polillas"},{"id":"loc-105","label":"189-190","display":"189-190","numbers":[189,190],"name":"La Rebotica de D. Hilarión","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704068","lon":"-4.463756","search":"la rebotica de d. hilarion 189-190","nameSearch":"la rebotica de d. hilarion"},{"id":"loc-106","label":"191","display":"191","numbers":[191],"name":"La Espiga","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703986","lon":"-4.464017","search":"la espiga 191","nameSearch":"la espiga"},{"id":"loc-107","label":"192","display":"192","numbers":[192],"name":"El Péndulo","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703996","lon":"-4.464055","search":"el pendulo 192","nameSearch":"el pendulo"},{"id":"loc-108","label":"193-194-195","display":"193–195","numbers":[193,194,195],"name":"Caseta Municipal - San Miguel","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704138","lon":"-4.464141","search":"caseta municipal - san miguel 193-194-195","nameSearch":"caseta municipal - san miguel"},{"id":"loc-109","label":"196","display":"196","numbers":[196],"name":"El Gazpachuelo","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704288","lon":"-4.464219","search":"el gazpachuelo 196","nameSearch":"el gazpachuelo"},{"id":"loc-110","label":"197","display":"197","numbers":[197],"name":"La Jarana","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704313","lon":"-4.464123","search":"la jarana 197","nameSearch":"la jarana"},{"id":"loc-111","label":"198-199-200","display":"198–200","numbers":[198,199,200],"name":"A.R.C. El Portón","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704579","lon":"-4.464039","search":"a.r.c. el porton 198-199-200","nameSearch":"a.r.c. el porton"},{"id":"loc-112","label":"201-202","display":"201-202","numbers":[201,202],"name":"Siempre Así","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704776","lon":"-4.464153","search":"siempre asi 201-202","nameSearch":"siempre asi"},{"id":"loc-113","label":"203","display":"203","numbers":[203],"name":"Puertosol Mama Juana Lombok","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704900","lon":"-4.464237","search":"puertosol mama juana lombok 203","nameSearch":"puertosol mama juana lombok"},{"id":"loc-114","label":"204","display":"204","numbers":[204],"name":"La Buganvilla","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704975","lon":"-4.464280","search":"la buganvilla 204","nameSearch":"la buganvilla"},{"id":"loc-115","label":"205-206-207-208","display":"205–208","numbers":[205,206,207,208],"name":"Caseta de Los Verdiales","street":"C/ Antonio Rodríguez Sánchez","lat":"36.705186","lon":"-4.464393","search":"caseta de los verdiales 205-206-207-208","nameSearch":"caseta de los verdiales"},{"id":"loc-116","label":"209","display":"209","numbers":[209],"name":"Maruja Limón","street":"C/ Antonio Rodríguez Sánchez","lat":"36.705387","lon":"-4.464520","search":"maruja limon 209","nameSearch":"maruja limon"},{"id":"loc-117","label":"210","display":"210","numbers":[210],"name":"Los Coloraos","street":"C/ Antonio Rodríguez Sánchez","lat":"36.705475","lon":"-4.464566","search":"los coloraos 210","nameSearch":"los coloraos"},{"id":"loc-118","label":"211","display":"211","numbers":[211],"name":"La Noria 211","street":"C/ Antonio Rodríguez Sánchez","lat":"36.705559","lon":"-4.464616","search":"la noria 211 211","nameSearch":"la noria 211"},{"id":"loc-119","label":"213","display":"213","numbers":[213],"name":"La Cantina Catrina","street":"C/ Antonio Rodríguez Sánchez","lat":"36.701913","lon":"-4.462567","search":"la cantina catrina 213","nameSearch":"la cantina catrina"},{"id":"loc-120","label":"S/N","display":"S/N","numbers":[],"name":"Caseta Municipal Ecuestre, Caballos","street":"C/ Peñista Rafael Fuentes","lat":"36.706232","lon":"-4.464010","search":"caseta municipal ecuestre, caballos s/n","nameSearch":"caseta municipal ecuestre, caballos"},{"id":"loc-121","label":"169BIS","display":"169BIS","numbers":[],"name":"Sin nombre conocido","street":"C/ Antonio Rodríguez Sánchez","lat":"36.701991","lon":"-4.462553","search":"sin nombre conocido 169bis","nameSearch":"sin nombre conocido"},{"id":"loc-122","label":"S/N","display":"S/N","numbers":[],"name":"Fuente de la Biznaga","street":"C/ Antonio Rodríguez Sánchez","lat":"36.704193","lon":"-4.463977","search":"fuente de la biznaga s/n","nameSearch":"fuente de la biznaga"},{"id":"loc-123","label":"S/N","display":"S/N","numbers":[],"name":"Rotonda de las Biznagas","street":"C/ Antonio Rodríguez Sánchez","lat":"36.703384","lon":"-4.463183","search":"rotonda de las biznagas s/n","nameSearch":"rotonda de las biznagas"},{"id":"loc-124","label":"S/N","display":"S/N","numbers":[],"name":"Banquito de la feria","street":"Palacio de Ferias","lat":"36.704477","lon":"-4.458656","search":"banquito de la feria s/n","nameSearch":"banquito de la feria"}];
+
+const MAPS = 'https://www.google.com/maps/dir/?api=1&destination=';
+/* lucide · navigation — mismo grosor de trazo que el resto de iconos */
+const NAV_PATH = 'M3.5 11.2 21.4 2.6l-8.6 17.9-1.9-7.4-7.4-1.9z';
+const NS = 'http://www.w3.org/2000/svg';
+
+const q = document.getElementById('q');
+const list = document.getElementById('list');
+const meta = document.getElementById('meta');
+const body = document.body;
+
+/** Minúsculas, sin tildes, comillas normalizadas, espacios colapsados. */
+function normalize(s){
+  return s.toLowerCase()
+    .replace(/[‘’]/g, "'")
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ').trim();
+}
+
+function mapsUrl(loc){
+  return MAPS + loc.lat + ',' + loc.lon + '&travelmode=driving&dir_action=navigate';
+}
+
+/**
+ * Filtra y ordena. Dentro de cada grupo se conserva el orden de data.md.
+ *
+ * Consulta numérica  → número exacto > número que empieza por > nombre que contiene.
+ *   Nunca coincidencia de subcadena sobre el número: escribir 39 no puede
+ *   devolver la caseta 139. Mandar la unidad a la caseta equivocada es el
+ *   único fallo grave posible en esta app.
+ * Consulta de texto  → nombre que empieza por > nombre que contiene.
+ */
+function search(raw){
+  const term = normalize(raw);
+  if (!term) return LOCATIONS;
+
+  const exact = [], prefix = [], contains = [];
+
+  if (/^\d+$/.test(term)){
+    const num = parseInt(term, 10);
+    for (const loc of LOCATIONS){
+      if (loc.numbers.includes(num)) exact.push(loc);
+      else if (loc.numbers.some(n => String(n).startsWith(term))) prefix.push(loc);
+      else if (loc.nameSearch.includes(term)) contains.push(loc);
+    }
+  } else {
+    for (const loc of LOCATIONS){
+      const i = loc.search.indexOf(term);
+      if (i === 0) prefix.push(loc);
+      else if (i > 0) contains.push(loc);
+    }
+  }
+  return exact.concat(prefix, contains);
+}
+
+function row(loc){
+  const a = document.createElement('a');
+  a.className = 'row';
+  a.href = mapsUrl(loc);
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  a.setAttribute('aria-label',
+    'Navegar a ' + loc.name + ', caseta ' + loc.label + ', ' + loc.street);
+
+  const num = document.createElement('span');
+  num.className = loc.numbers.length ? 'num' : 'num sn';
+  num.textContent = loc.display;
+
+  const nom = document.createElement('span');
+  nom.className = 'nom';
+  nom.textContent = loc.name;
+  nom.title = loc.name;
+
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('class', 'ico nav');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('aria-hidden', 'true');
+  const path = document.createElementNS(NS, 'path');
+  path.setAttribute('d', NAV_PATH);
+  svg.append(path);
+
+  a.append(num, nom, svg);
+
+  const li = document.createElement('li');
+  li.append(a);
+  return li;
+}
+
+function render(results){
+  const frag = document.createDocumentFragment();
+  for (const loc of results) frag.append(row(loc));
+  list.replaceChildren(frag);
+
+  const n = results.length;
+  body.classList.toggle('no-results', n === 0);
+  meta.innerHTML = n === 0
+    ? 'Sin resultados'
+    : '<span><b>' + n + '</b> ' + (n === 1 ? 'ubicación' : 'ubicaciones') + '</span>';
+}
+
+function update(){
+  const v = q.value;
+  body.classList.toggle('has-query', v.length > 0);
+  render(search(v));
+}
+
+q.addEventListener('input', update);
+q.addEventListener('search', update);
+document.getElementById('clear').addEventListener('click', () => {
+  q.value = '';
+  update();
+  q.focus();
+});
+q.addEventListener('keydown', e => {
+  if (e.key === 'Escape'){ q.value = ''; update(); }
+});
+
+update();
+
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

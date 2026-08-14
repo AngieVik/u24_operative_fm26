@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>U24 · Feria de Málaga 2026</title>
+<meta name="description" content="Buscador de casetas del Real de la Feria de Málaga para el operativo U24.">
+<meta name="theme-color" content="#141414">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="U24 FM26">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23141414'/%3E%3Cg stroke='%23FFC72C' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 4v16M5 8l14 8M19 8L5 16'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+/* Roboto subconjuntado a los 109 caracteres que la app puede mostrar.
+   Empotrado para que funcione sin cobertura y sin peticiones a terceros. */
+@font-face{font-family:Roboto;font-style:normal;font-weight:400;font-display:block;
+  src:url(data:font/woff2;base64,__FONT_400__) format('woff2')}
+@font-face{font-family:Roboto;font-style:normal;font-weight:500;font-display:block;
+  src:url(data:font/woff2;base64,__FONT_500__) format('woff2')}
+@font-face{font-family:Roboto;font-style:normal;font-weight:700;font-display:block;
+  src:url(data:font/woff2;base64,__FONT_700__) format('woff2')}
+
+:root{
+  --bg:#141414;
+  --panel:#1A1A1A;
+  --field:#1C1C1C;
+  --row-active:#232323;
+  --rule:#242424;
+  --border:#2E2E2E;
+  --accent:#FFC72C;
+  --text:#F0F0F0;
+  --muted:#8C8C8C;
+  --icon:#7A7A7A;
+  --pad:16px;
+  --row:42px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg)}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Roboto,system-ui,sans-serif;
+  font-size:16px;line-height:1.2;
+  -webkit-font-smoothing:antialiased;
+  overscroll-behavior-y:none;
+}
+
+/* Iconos de trazo, familia lucide. Un único grosor en toda la app. */
+.ico{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Cabecera ─────────────────────────────────────── */
+.head{
+  position:sticky;top:0;z-index:10;background:var(--bg);
+  padding-top:env(safe-area-inset-top);
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  height:52px;padding:0 var(--pad);
+}
+.brand .mark{flex:none;width:22px;height:22px;color:var(--accent)}
+.brand .mark path{stroke-width:2}
+.brand .wm{
+  font-size:17px;font-weight:700;letter-spacing:.04em;color:var(--text);
+}
+.brand .sub{
+  font-size:10px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);
+}
+.brand .sep{
+  width:1px;height:16px;background:var(--border);margin:0 2px;
+}
+
+/* ── Buscador ─────────────────────────────────────── */
+.search{padding:0 var(--pad) 12px}
+.field{
+  position:relative;display:flex;align-items:center;
+  background:var(--field);
+  border:1px solid var(--border);border-radius:10px;
+}
+.field:focus-within{border-color:var(--accent)}
+.field .ico.lead{
+  position:absolute;left:14px;width:19px;height:19px;
+  color:var(--icon);pointer-events:none;
+}
+.field:focus-within .ico.lead{color:var(--accent)}
+#q{
+  display:block;width:100%;height:52px;
+  padding:0 52px 0 43px;
+  background:none;border:0;outline:none;border-radius:10px;
+  font-family:inherit;font-size:19px;font-weight:500;color:var(--text);
+  letter-spacing:.01em;
+}
+#clear{
+  position:absolute;right:2px;
+  width:48px;height:48px;display:none;place-items:center;
+  background:none;border:0;padding:0;color:var(--icon);cursor:pointer;
+}
+#clear .ico{width:18px;height:18px}
+#clear:active{color:var(--text)}
+body.has-query #clear{display:grid}
+
+.meta{
+  display:flex;align-items:center;gap:7px;
+  height:28px;padding:0 var(--pad);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  background:var(--panel);
+  font-size:10.5px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);
+}
+.meta b{color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ── Filas ────────────────────────────────────────── */
+ul{list-style:none;margin:0;padding:0}
+
+.row{
+  display:flex;align-items:center;
+  height:var(--row);padding:0 var(--pad);
+  border-bottom:1px solid var(--rule);
+  color:inherit;text-decoration:none;
+}
+.row:active{background:var(--row-active)}
+.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* Ancho fijo: los nombres deben alinearse en columna aunque el número
+   sea "3" o "180–186". 80px cubre la etiqueta más larga posible. */
+.num{
+  flex:none;width:80px;padding-right:8px;
+  font-size:15px;font-weight:700;
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;
+  color:var(--accent);
+}
+.num.sn{font-size:13px;letter-spacing:.06em;color:var(--muted)}
+
+.nom{
+  flex:1;min-width:0;
+  font-size:16.5px;font-weight:500;letter-spacing:.005em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+.row .nav{
+  flex:none;width:19px;height:19px;margin-left:12px;
+  color:var(--icon);
+}
+.row:active .nav{color:var(--accent)}
+
+/* ── Sin resultados ───────────────────────────────── */
+.none{display:none;padding:24px var(--pad);color:var(--muted);font-size:13.5px}
+.none b{display:block;color:var(--text);font-size:15px;font-weight:500;margin-bottom:5px}
+body.no-results .none{display:block}
+body.no-results ul{display:none}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (min-width:600px){
+  .head,ul,.none{max-width:560px;margin-inline:auto}
+  ul,.none{border-inline:1px solid var(--rule)}
+}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="brand">
+    <svg class="ico mark" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9"/>
+    </svg>
+    <span class="wm">U24</span>
+    <span class="sep" aria-hidden="true"></span>
+    <span class="sub">Servicios Sanitarios · FM26</span>
+  </div>
+
+  <div class="search">
+    <div class="field">
+      <svg class="ico lead" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7.5"/><path d="M20.5 20.5l-4.2-4.2"/>
+      </svg>
+      <input id="q" type="text"
+             autocomplete="off" autocorrect="off" autocapitalize="off"
+             spellcheck="false" inputmode="search" enterkeyhint="search"
+             aria-label="Buscar caseta por nombre o número" aria-controls="list" autofocus>
+      <button id="clear" type="button" aria-label="Borrar búsqueda">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <p class="meta" id="meta" role="status" aria-live="polite"></p>
+</header>
+
+<main>
+  <ul id="list"></ul>
+  <div class="none">
+    <b>Sin coincidencias</b>
+    Comprueba el número o escribe menos letras del nombre.
+  </div>
+</main>
+
+<script>
+/* Datos generados desde data.md por scripts/build.py — no editar a mano. */
+const LOCATIONS = __LOCATIONS__;
+
+const MAPS = 'https://www.google.com/maps/dir/?api=1&destination=';
+/* lucide · navigation — mismo grosor de trazo que el resto de iconos */
+const NAV_PATH = 'M3.5 11.2 21.4 2.6l-8.6 17.9-1.9-7.4-7.4-1.9z';
+const NS = 'http://www.w3.org/2000/svg';
+
+const q = document.getElementById('q');
+const list = document.getElementById('list');
+const meta = document.getElementById('meta');
+const body = document.body;
+
+/** Minúsculas, sin tildes, comillas normalizadas, espacios colapsados. */
+function normalize(s){
+  return s.toLowerCase()
+    .replace(/[‘’]/g, "'")
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ').trim();
+}
+
+function mapsUrl(loc){
+  return MAPS + loc.lat + ',' + loc.lon + '&travelmode=driving&dir_action=navigate';
+}
+
+/**
+ * Filtra y ordena. Dentro de cada grupo se conserva el orden de data.md.
+ *
+ * Consulta numérica  → número exacto > número que empieza por > nombre que contiene.
+ *   Nunca coincidencia de subcadena sobre el número: escribir 39 no puede
+ *   devolver la caseta 139. Mandar la unidad a la caseta equivocada es el
+ *   único fallo grave posible en esta app.
+ * Consulta de texto  → nombre que empieza por > nombre que contiene.
+ */
+function search(raw){
+  const term = normalize(raw);
+  if (!term) return LOCATIONS;
+
+  const exact = [], prefix = [], contains = [];
+
+  if (/^\d+$/.test(term)){
+    const num = parseInt(term, 10);
+    for (const loc of LOCATIONS){
+      if (loc.numbers.includes(num)) exact.push(loc);
+      else if (loc.numbers.some(n => String(n).startsWith(term))) prefix.push(loc);
+      else if (loc.nameSearch.includes(term)) contains.push(loc);
+    }
+  } else {
+    for (const loc of LOCATIONS){
+      const i = loc.search.indexOf(term);
+      if (i === 0) prefix.push(loc);
+      else if (i > 0) contains.push(loc);
+    }
+  }
+  return exact.concat(prefix, contains);
+}
+
+function row(loc){
+  const a = document.createElement('a');
+  a.className = 'row';
+  a.href = mapsUrl(loc);
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  a.setAttribute('aria-label',
+    'Navegar a ' + loc.name + ', caseta ' + loc.label + ', ' + loc.street);
+
+  const num = document.createElement('span');
+  num.className = loc.numbers.length ? 'num' : 'num sn';
+  num.textContent = loc.display;
+
+  const nom = document.createElement('span');
+  nom.className = 'nom';
+  nom.textContent = loc.name;
+  nom.title = loc.name;
+
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('class', 'ico nav');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('aria-hidden', 'true');
+  const path = document.createElementNS(NS, 'path');
+  path.setAttribute('d', NAV_PATH);
+  svg.append(path);
+
+  a.append(num, nom, svg);
+
+  const li = document.createElement('li');
+  li.append(a);
+  return li;
+}
+
+function render(results){
+  const frag = document.createDocumentFragment();
+  for (const loc of results) frag.append(row(loc));
+  list.replaceChildren(frag);
+
+  const n = results.length;
+  body.classList.toggle('no-results', n === 0);
+  meta.innerHTML = n === 0
+    ? 'Sin resultados'
+    : '<span><b>' + n + '</b> ' + (n === 1 ? 'ubicación' : 'ubicaciones') + '</span>';
+}
+
+function update(){
+  const v = q.value;
+  body.classList.toggle('has-query', v.length > 0);
+  render(search(v));
+}
+
+q.addEventListener('input', update);
+q.addEventListener('search', update);
+document.getElementById('clear').addEventListener('click', () => {
+  q.value = '';
+  update();
+  q.focus();
+});
+q.addEventListener('keydown', e => {
+  if (e.key === 'Escape'){ q.value = ''; update(); }
+});
+
+update();
+
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
