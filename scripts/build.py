@@ -1,27 +1,50 @@
 #!/usr/bin/env python3
-"""Genera index.html a partir de data.md y src/template.html.
+"""Ensambla dist/, la carpeta que se publica, a partir de data.md y src/.
 
 Uso:  python3 scripts/build.py
 
-Aplica las reglas de normalizacion documentadas en docs/02-datos.md.
-Falla de forma ruidosa ante cualquier fila invalida: nunca omite datos en silencio.
+dist/ contiene EXACTAMENTE lo que la aplicacion necesita y nada mas. El resto
+del repositorio -- datos de origen, documentacion, plantillas, scripts,
+originales de marca -- no se publica. Netlify apunta a dist/.
+
+Aplica las reglas de normalizacion documentadas en docs/02-datos.md y falla de
+forma ruidosa ante cualquier dato invalido: nunca omite nada en silencio.
 """
 
 import base64
 import json
 import re
+import shutil
 import sys
 import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data.md"
-TEMPLATE = ROOT / "src" / "template.html"
-FONTS = ROOT / "src" / "fonts"
-LOGO = ROOT / "src" / "logo.svg"
-OUTPUT = ROOT / "index.html"
+SRC = ROOT / "src"
+TEMPLATE = SRC / "template.html"
+FONTS = SRC / "fonts"
+LOGO = SRC / "logo.svg"
+CHARSET = FONTS / "charset.txt"
+ICONS = ROOT / "icons"
+
+DIST = ROOT / "dist"
+OUTPUT = DIST / "index.html"
 
 FONT_WEIGHTS = (400, 500, 700)
+
+# Se copian tal cual a dist/. Cualquier archivo de src/ o icons/ que no este
+# aqui NO se publica.
+COPY_ROOT = ("manifest.webmanifest", "sw.js")
+COPY_ICONS = (
+    "icon-192.png",
+    "icon-512.png",
+    "icon-maskable-192.png",
+    "icon-maskable-512.png",
+    "apple-touch-icon.png",
+    "favicon-32.png",
+    "favicon-16.png",
+)
 
 EXPECTED_ROWS = 125
 
@@ -64,6 +87,31 @@ def compact_label(label, numbers):
     if numbers != list(range(numbers[0], numbers[0] + len(numbers))):
         return label
     return f"{numbers[0]}–{numbers[-1]}"
+
+
+def check_charset(locations):
+    """La tipografia va subconjuntada a los caracteres que hoy aparecen en
+    data.md. Si un listado futuro trae uno nuevo, el navegador pintaria un
+    cuadrado vacio sin avisar. Aqui se detiene el build en vez de publicarlo.
+    """
+    if not CHARSET.exists():
+        fail(f"falta {CHARSET.relative_to(ROOT)}, necesario para validar la fuente")
+
+    cubiertos = set(CHARSET.read_text(encoding="utf-8"))
+    usados = set()
+    for loc in locations:
+        usados |= set(loc["display"]) | set(loc["name"])
+
+    faltan = sorted(c for c in usados if c not in cubiertos and c.isprintable())
+    if faltan:
+        detalle = ", ".join(f"{c!r} (U+{ord(c):04X})" for c in faltan)
+        fail(
+            "la fuente no cubre estos caracteres de data.md: "
+            + detalle
+            + "\n       Regenera el subconjunto con scripts/subset-fonts.py "
+            "y actualiza src/fonts/charset.txt."
+        )
+    return len(usados)
 
 
 def read_logo():
@@ -165,6 +213,44 @@ def check(locations):
     return seen
 
 
+def assemble_dist(html):
+    """Reconstruye dist/ desde cero. Se borra antes para que un archivo
+    retirado del proyecto no siga publicandose por inercia."""
+    if DIST.exists():
+        shutil.rmtree(DIST)
+    (DIST / "icons").mkdir(parents=True)
+
+    OUTPUT.write_text(html, encoding="utf-8", newline="\n")
+
+    for name in COPY_ROOT:
+        origen = SRC / name
+        if not origen.exists():
+            fail(f"falta {origen.relative_to(ROOT)}")
+        shutil.copy2(origen, DIST / name)
+
+    for name in COPY_ICONS:
+        origen = ICONS / name
+        if not origen.exists():
+            fail(f"falta {origen.relative_to(ROOT)}")
+        shutil.copy2(origen, DIST / "icons" / name)
+
+
+def check_dist_references():
+    """Todo lo que index.html, el manifiesto y el service worker referencian
+    debe existir dentro de dist/. Un 404 en produccion se detecta aqui."""
+    textos = {
+        p: (DIST / p).read_text(encoding="utf-8")
+        for p in ("index.html", "manifest.webmanifest", "sw.js")
+    }
+    referencias = set()
+    for contenido in textos.values():
+        referencias |= set(re.findall(r'["\'](\./)?(icons/[\w.-]+)["\']', contenido))
+    faltan = [ref for _, ref in referencias if not (DIST / ref).exists()]
+    if faltan:
+        fail("dist/ referencia archivos que no contiene: " + ", ".join(sorted(faltan)))
+    return len(referencias)
+
+
 def main():
     for path in (DATA, TEMPLATE):
         if not path.exists():
@@ -173,6 +259,7 @@ def main():
     rows = parse_rows(DATA.read_text(encoding="utf-8"))
     locations = build_locations(rows)
     numbers = check(locations)
+    n_chars = check_charset(locations)
 
     template = TEMPLATE.read_text(encoding="utf-8")
     markers = ["__LOCATIONS__", "__LOGO__"] + [f"__FONT_{w}__" for w in FONT_WEIGHTS]
@@ -188,10 +275,12 @@ def main():
     for weight, b64 in fonts.items():
         html = html.replace(f"__FONT_{weight}__", b64)
 
-    if "__" in html.replace("__", "", 0) and any(m in html for m in markers):
-        fail("han quedado marcadores sin sustituir en la salida")
+    restantes = [m for m in markers if m in html]
+    if restantes:
+        fail("marcadores sin sustituir: " + ", ".join(restantes))
 
-    OUTPUT.write_text(html, encoding="utf-8", newline="\n")
+    assemble_dist(html)
+    n_refs = check_dist_references()
 
     size = OUTPUT.stat().st_size
     unnamed = [loc["label"] for loc in locations if not loc["numbers"]]
@@ -203,13 +292,17 @@ def main():
         if loc["display"] != loc["label"]
     ]
 
+    total = sum(f.stat().st_size for f in DIST.rglob("*") if f.is_file())
+    n_files = sum(1 for f in DIST.rglob("*") if f.is_file())
+
     print(f"OK  {len(locations)} ubicaciones -> {OUTPUT.relative_to(ROOT)}")
     print(f"    {len(numbers)} numeros de caseta, {len(streets)} calles")
     print(f"    sin numero: {', '.join(unnamed)}")
     print(f"    etiquetas abreviadas: {len(abbreviated)}")
-    print(f"    fuentes empotradas: {len(FONT_WEIGHTS)} pesos")
+    print(f"    fuente: {n_chars} caracteres usados, todos cubiertos")
     print(f"    emblema empotrado: {LOGO.stat().st_size / 1024:.1f} KB")
-    print(f"    tamano: {size / 1024:.1f} KB")
+    print(f"    index.html: {size / 1024:.1f} KB")
+    print(f"    dist/: {n_files} archivos, {total / 1024:.1f} KB, {n_refs} referencias OK")
 
 
 if __name__ == "__main__":

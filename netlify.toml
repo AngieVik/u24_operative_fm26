@@ -1,10 +1,11 @@
 # Configuración de despliegue en Netlify.
 #
-# Sitio estático puro: no hay build. `index.html` se genera en local con
-# `python3 scripts/build.py` y se commitea ya construido.
+# Se publica SOLO dist/, que genera `python3 scripts/build.py` en local y se
+# commitea ya construido. Los datos de origen, la documentación, las plantillas
+# y los originales de marca se quedan en el repositorio, fuera de internet.
 
 [build]
-  publish = "."
+  publish = "dist"
   command = ""
 
 # ── Service worker ────────────────────────────────────────────────────────────

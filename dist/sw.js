@@ -2,7 +2,7 @@
    Cachea la app completa en la instalación para que buscar funcione sin cobertura.
    Estrategia: cache-first para lo propio; la red solo se usa para actualizar. */
 
-const CACHE = 'u24-fm26-v3';
+const CACHE = 'u24-fm26-v4';
 
 /* Solo lo imprescindible para que la app funcione sin cobertura.
    index.html ya lleva dentro los datos, la tipografía y el emblema.
@@ -42,7 +42,13 @@ self.addEventListener('fetch', event => {
 
   // Solo se gestionan navegaciones y recursos propios en GET.
   if (req.method !== 'GET') return;
-  if (new URL(req.url).origin !== self.location.origin) return;
+
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;
+
+  // El propio service worker nunca se cachea: una copia rancia aquí podría
+  // impedir que el equipo reciba una corrección de coordenadas.
+  if (url.pathname.endsWith('/sw.js')) return;
 
   if (req.mode === 'navigate') {
     event.respondWith(

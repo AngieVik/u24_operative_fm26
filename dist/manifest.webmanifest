@@ -4,7 +4,7 @@
   "description": "Buscador de casetas del Real de la Feria de Málaga para el operativo sanitario U24.",
   "lang": "es-ES",
   "dir": "ltr",
-  "id": "/u24-fm26/",
+  "id": "/",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

@@ -14,27 +14,62 @@ secciones marcadas *(a concretar)* se completarán cuando la decisión esté tom
 
 ```
 u24_operative_fm26/
+├── netlify.toml                 Despliegue. publish = "dist"
 ├── CLAUDE.md                    Instrucciones permanentes
 ├── data.md                      Fuente de verdad. Solo lectura.
 ├── descripcion.md               Brief original
 │
-├── index.html                   ← GENERADO. No editar a mano.
-├── manifest.webmanifest         Manifiesto PWA
-├── sw.js                        Service worker
-├── icons/                       Iconos servidos (ver más abajo)
+├── dist/                        ← LO ÚNICO QUE SE PUBLICA. Generado.
+│   ├── index.html
+│   ├── manifest.webmanifest
+│   ├── sw.js
+│   └── icons/                   Los 7 iconos que se sirven
 │
 ├── src/                         Fuentes de la aplicación
 │   ├── template.html            Plantilla: HTML, CSS y JS
+│   ├── manifest.webmanifest     Manifiesto PWA
+│   ├── sw.js                    Service worker
 │   ├── logo.svg                 Emblema optimizado que se empotra
-│   └── fonts/roboto-*.woff2     Roboto subconjuntada
+│   └── fonts/
+│       ├── roboto-*.woff2       Roboto subconjuntada
+│       └── charset.txt          Cobertura real, para validar el build
 │
+├── icons/                       Biblioteca de iconos. build.py copia 7 a dist/.
 ├── logo/                        Originales de marca. No se sirven.
-│   ├── Logo.svg                 Emblema vectorial original
-│   └── corporate_illustration.png
 │
-├── scripts/build.py             data.md + src/ → index.html
+├── scripts/
+│   ├── build.py                 data.md + src/ → dist/
+│   └── subset-fonts.py          Regenera la fuente y charset.txt
 └── docs/                        Documentación numerada
 ```
+
+### Solo se publica `dist/`
+
+`netlify.toml` apunta a `dist/`, y `build.py` la reconstruye desde cero en cada
+ejecución: borra la carpeta y copia únicamente los archivos declarados en
+`COPY_ROOT` y `COPY_ICONS`. Un archivo retirado del proyecto deja de publicarse
+automáticamente, y uno nuevo no aparece en internet salvo que se añada de forma
+explícita.
+
+Esto mantiene fuera de la web `data.md`, la documentación, las plantillas, los
+scripts y los originales de marca. No contienen secretos, pero son material
+interno de un dispositivo de emergencias y no tienen por qué ser públicos.
+
+`dist/` **se commitea**: Netlify no ejecuta build, así que el contenido publicado
+es el que haya en el repositorio.
+
+### Validaciones que hace `build.py`
+
+Aborta el build, no avisa y continúa:
+
+- 125 filas exactas, 4 columnas por fila, coordenadas dentro del recinto.
+- Identificadores, coordenadas y números de caseta sin duplicar.
+- **Cobertura tipográfica:** todo carácter de `data.md` debe existir en
+  `src/fonts/charset.txt`. Sin esto, un nombre con un carácter nuevo se
+  publicaría como un cuadrado vacío sin que nadie se enterase.
+- Ningún marcador `__…__` sin sustituir en la salida.
+- Toda referencia a `icons/…` desde `index.html`, el manifiesto o el service
+  worker existe dentro de `dist/`.
 
 Nombres de archivo y carpeta en `kebab-case`. Los documentos de `docs/` llevan prefijo
 numérico de dos dígitos para fijar el orden de lectura.
@@ -50,14 +85,14 @@ marca, se sustituye el original y se regeneran los derivados; nunca al revés.
 
 | Archivo | Uso |
 | --- | --- |
-| `icons/icon-192.png`, `icon-512.png` | Manifiesto, `purpose: any`. Emblema a sangre sobre `#141414`. |
-| `icons/icon-maskable-192.png`, `-512.png` | Manifiesto, `purpose: maskable`. Con zona de seguridad para que Android los recorte sin comerse el emblema. |
-| `icons/apple-touch-icon.png` | iOS, 180×180 y opaco: iOS no respeta la transparencia. |
-| `icons/favicon-32.png`, `-16.png` | Pestaña del navegador. |
+| `icon-192.png`, `icon-512.png` | Manifiesto, `purpose: any`. Emblema a sangre sobre `#141414`. |
+| `icon-maskable-192.png`, `-512.png` | Manifiesto, `purpose: maskable`. Con zona de seguridad para que Android los recorte sin comerse el emblema. |
+| `apple-touch-icon.png` | iOS, 180×180 y opaco: iOS no respeta la transparencia. |
+| `favicon-32.png`, `-16.png` | Pestaña del navegador. |
 
-Los `icons/maskable_icon_x*.png` y `icons/Icons.js` son la entrega original del generador
-de iconos. Se conservan como referencia pero **el manifiesto no los referencia**; en
-particular `maskable_icon.png` pesa 7 MB y no debe servirse nunca.
+Son los siete que `build.py` copia a `dist/icons/`. Los `icons/maskable_icon_x*.png` y
+`icons/Icons.js` son la entrega original del generador: se conservan como referencia y
+**no se publican**. En particular `maskable_icon.png` pesa 7 MB.
 
 ## Nomenclatura en código
 
