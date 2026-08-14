@@ -2,18 +2,18 @@
    Cachea la app completa en la instalación para que buscar funcione sin cobertura.
    Estrategia: cache-first para lo propio; la red solo se usa para actualizar. */
 
-const CACHE = 'u24-fm26-v2';
+const CACHE = 'u24-fm26-v3';
+
+/* Solo lo imprescindible para que la app funcione sin cobertura.
+   index.html ya lleva dentro los datos, la tipografía y el emblema.
+   Los iconos NO se precachean: los descarga el sistema al instalar el acceso
+   directo y no hacen falta para buscar. Precacharlos costaba 680 KB extra
+   antes de que la app estuviera lista, justo en el Real y con la red saturada.
+   El manejador de fetch los cachea igualmente si el navegador los pide. */
 const ASSETS = [
   './',
   './index.html',
-  './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/icon-maskable-192.png',
-  './icons/icon-maskable-512.png',
-  './icons/apple-touch-icon.png',
-  './icons/favicon-32.png',
-  './icons/favicon-16.png'
+  './manifest.webmanifest'
 ];
 
 self.addEventListener('install', event => {
