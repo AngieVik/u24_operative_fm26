@@ -11,8 +11,8 @@
 # ── Service worker ────────────────────────────────────────────────────────────
 # Crítico. Por defecto el navegador cachea sw.js hasta 24 h: si se cachea, los
 # móviles del equipo pueden quedarse con la versión anterior de la app durante
-# un día entero. Con una lista de casetas que puede corregirse a mitad de Feria,
-# eso es inaceptable.
+# un día entero. Con un listado de ubicaciones que puede corregirse con el
+# operativo ya en marcha, eso es inaceptable.
 [[headers]]
   for = "/sw.js"
   [headers.values]
