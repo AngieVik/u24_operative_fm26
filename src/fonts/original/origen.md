@@ -24,14 +24,10 @@ Pesos conservados: los tres que usa la aplicación.
 
 ## Por qué esta versión y no otra
 
-Los `.woff2` que la aplicación venía sirviendo declaran `Version 2.138; 2017`, con
-`unitsPerEm` 2048, `capHeight` 1456 y `xHeight` 1082. Los originales de aquí coinciden en
-los cuatro valores, así que regenerar el subconjunto **no altera el aspecto** de lo ya
-publicado.
-
 Google Fonts sirve hoy Roboto 3.x en formato variable, con dibujo y métricas distintos.
-Regenerar desde ahí cambiaría el interlineado y el ancho de los nombres sin que nadie lo
-notase hasta verlo en un móvil.
+Regenerar el subconjunto desde ahí cambiaría el interlineado y el ancho de los nombres sin
+que nadie lo notase hasta verlo en un móvil. Por eso el original vive en el repositorio y
+el script comprueba la versión antes de usarlo.
 
 ## Cómo regenerar
 

@@ -1,4 +1,8 @@
-# data
+# Datos del operativo
+
+Fuente de verdad de la aplicación. Cada tabla se lee por su título de sección.
+
+## Ubicaciones
 
 | ubication_number            | name                                         | adress                       | coords              |
 | --------------------------- | -------------------------------------------- | ---------------------------- | ------------------- |
@@ -127,3 +131,15 @@
 | S/N                         | Fuente de la Biznaga                         | C/ Antonio Rodríguez Sánchez | 36.704193,-4.463977 |
 | S/N                         | Rotonda de las Biznagas                      | C/ Antonio Rodríguez Sánchez | 36.703384,-4.463183 |
 | S/N                         | Banquito de la feria                         | Palacio de Ferias            | 36.704477,-4.458656 |
+
+## Calles
+
+Extremos de cada calle, para trazar su recorrido sobre el mapa. El nombre debe
+coincidir con el de la columna `adress` de las ubicaciones. La columna `waypoints`
+es opcional: puntos intermedios separados por `;`. Esta sección puede quedar vacía.
+
+| street                       | start               | end                 | waypoints |
+| ---------------------------- | ------------------- | ------------------- | --------- |
+| C/ Antonio Rodríguez Sánchez | 36.701673,-4.462155 | 36.705559,-4.464616 |           |
+| C/ Peñista Rafael Fuentes    | 36.701843,-4.461482 | 36.706232,-4.464010 |           |
+| C/ José Blánquez 'El Maño'   | 36.702188,-4.460701 | 36.706490,-4.463178 |           |

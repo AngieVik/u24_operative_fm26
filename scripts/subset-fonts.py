@@ -5,12 +5,11 @@ Uso:  pip install fonttools brotli
       python3 scripts/subset-fonts.py [/ruta/a/otros/TTF]
 
 Sin argumentos toma los originales de src/fonts/original/, que viven en el
-repositorio justamente para que esto no dependa de lo que cada uno tenga en su
-maquina. Ver src/fonts/original/origen.md.
+repositorio para que esto no dependa de lo que cada uno tenga en su maquina.
+Ver src/fonts/original/origen.md.
 
-Hay que ejecutarlo cuando `scripts/build.py` avisa de que aparece un caracter
-que la fuente no cubre: al sustituir data.md por un listado nuevo, o al escribir
-un rotulo con un simbolo que antes no se usaba.
+Hay que ejecutarlo cuando `scripts/build.py` avisa de que la fuente no cubre
+algun caracter de los datos o de los rotulos.
 
 Produce:
   src/fonts/roboto-{400,500,700}.woff2
@@ -18,7 +17,7 @@ Produce:
 
 La alternativa a subconjuntar seria empotrar Roboto completa (~350 KB por peso)
 o servirla desde Google Fonts. Lo primero dispara el arranque; lo segundo rompe
-el funcionamiento sin cobertura, que es requisito (RNF-1).
+el funcionamiento sin cobertura, que es requisito.
 """
 
 import subprocess
@@ -33,18 +32,16 @@ TEMPLATE = ROOT / "src" / "template.html"
 
 WEIGHTS = {400: "Regular", 500: "Medium", 700: "Bold"}
 
-# Version de los originales conservados en src/fonts/original/. Si alguien mete
-# otra, el dibujo y las metricas cambian y la app se ve distinta sin avisar.
+# Version de los originales conservados en src/fonts/original/. Con otra, el
+# dibujo y las metricas cambian y la aplicacion se ve distinta sin avisar.
 EXPECTED_REVISION = 2.138
 
 # Todo lo que la interfaz puede pintar y no sale de data.md: rotulos, mensajes,
 # y el repertorio latino basico por seguridad ante nombres futuros.
 UI_TEXT = (
-    "U24 FERIA DE MALAGA UBICACIONES "
-    "ubicacion ubicaciones resultados quiza buscabas "
+    "ubicacion ubicaciones resultados quiza buscabas Copiado "
     "Sin coincidencias Comprueba el numero o escribe menos letras del nombre "
-    "Nombre o numero Buscar ubicacion por nombre Ver en el mapa Borrar busqueda "
-    "Copiado Copiar coordenadas de Recorrido de la calle "
+    "Nombre o numero Recorrido de la calle "
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "0123456789"
@@ -72,8 +69,7 @@ def check_revision(path):
 
 
 def data_chars():
-    """Las cuatro columnas de data.md se pintan en pantalla: identificador,
-    nombre, calle y coordenadas."""
+    """Todas las celdas de data.md se pintan en pantalla, en las dos tablas."""
     chars = set()
     for line in DATA.read_text(encoding="utf-8").splitlines():
         line = line.strip()

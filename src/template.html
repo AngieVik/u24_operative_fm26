@@ -101,8 +101,7 @@ body{
 body.has-query #clear{display:grid}
 
 /* El recuento no se pinta: durante un aviso no aporta. Se mantiene como
-   región activa para lectores de pantalla, que sí necesitan saber qué ha
-   dejado el filtro y si lo que se ofrece son coincidencias aproximadas. */
+   región activa para lectores de pantalla. */
 .sr{
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
@@ -111,27 +110,25 @@ body.has-query #clear{display:grid}
 /* ── Lista ────────────────────────────────────────── */
 ul{list-style:none;margin:0;padding:0}
 
-/* La fila NO es pulsable. Solo lo es el botón de la derecha: durante el
-   desplazamiento con el dedo, una fila-enlace se activa sin querer y abre
-   la ubicación equivocada. */
-/* Sin líneas de separación. Lo que agrupa las tres líneas de una misma
-   ubicación es la proximidad: 6,5 px de hueco óptico dentro del bloque contra
-   13,75 px entre bloques. Esa proporción —algo más del doble— es la que hace
-   de separador, así que no se toca una sin recalcular la otra.
-   Sin relleno vertical: es lo que permite que el botón de la derecha ocupe la
-   altura completa de la fila. */
+/* La fila no es pulsable: solo lo es el botón de la derecha. Una fila-enlace
+   se activa sola al desplazar la lista con el dedo.
+
+   Sin líneas de separación: lo que agrupa las tres líneas de una ubicación es
+   la proximidad, 6,5 px de hueco óptico dentro del bloque contra 13,75 px
+   entre bloques. Cambiar una distancia obliga a recalcular la otra.
+
+   Sin relleno vertical, para que el botón ocupe la altura completa de la fila.
+   Sin selección de texto, porque al desplazar con el dedo el arrastre la
+   inicia y llena la pantalla de resaltes. */
 .row{
   display:flex;align-items:center;gap:12px;
   min-height:72px;padding:0 0 0 var(--pad);
-  /* Sin selección de texto: al desplazar la lista con el dedo, el arrastre
-     seleccionaba nombres y dejaba la pantalla llena de resaltes azules. */
   -webkit-user-select:none;user-select:none;
   -webkit-touch-callout:none;
 }
 
-/* Ancho fijo: los nombres se alinean en columna aunque la etiqueta sea "3",
-   "180–186", "S/N" o "169BIS". Un único estilo para todas: la etiqueta es
-   siempre el identificador de la ubicación, tenga número o no. */
+/* Ancho fijo, para que los nombres se alineen en columna con etiquetas tan
+   dispares como "3", "180–186" o "S/N". */
 .num{
   flex:none;width:66px;
   font-size:15px;font-weight:700;
@@ -139,13 +136,10 @@ ul{list-style:none;margin:0;padding:0}
   color:var(--accent);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-/* Las tres líneas llevan altura de línea fija en píxeles, no proporcional.
-   Es lo que permite cuadrar el hueco entre ellas: el espacio que se ve es el
-   margen más el aire interno de cada caja —(altura de línea − tamaño) / 2—, y
-   con valores proporcionales ese aire cambia con cada tamaño de letra.
-       nombre  21 − 16.5 → 2.25     hueco 2.25 + 2.5  + 1.75 = 6.5
-       calle   16 − 12.5 → 1.75     hueco 1.75 + 2.75 + 2    = 6.5
-       coords  16 − 12   → 2                                          */
+/* Altura de línea fija en píxeles, no proporcional: el hueco que se ve es el
+   margen más el aire interno de cada caja, (altura de línea − tamaño) / 2, y
+   con valores proporcionales ese aire varía con cada tamaño de letra. Con
+   estos, los dos huecos miden 6,5 px exactos. */
 .txt{flex:1;min-width:0;display:block}
 .nom{
   display:block;
@@ -158,13 +152,11 @@ ul{list-style:none;margin:0;padding:0}
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
-/* Coordenadas a la vista. No son un adorno técnico: cuando Google Maps no
-   carga son lo único que queda para dictar la posición por radio. Al tocarlas
-   se copian.
-   Los márgenes negativos compensan el relleno: el relleno existe para dar un
-   objetivo táctil de 32 px sobre un texto de 16, y los márgenes hacen que la
-   caja siga ocupando en el flujo exactamente lo mismo que ocupaba cuando era
-   una línea de texto normal. Así el ritmo vertical no se mueve ni un píxel. */
+/* Coordenadas a la vista, y copiables al tocarlas: cuando Google Maps no
+   carga son lo único que queda para dictar la posición por radio.
+   Los márgenes negativos compensan el relleno, que da un objetivo táctil de
+   32 px sobre un texto de 16: así la caja ocupa en el flujo lo mismo que una
+   línea de texto y el ritmo vertical no se altera. */
 .co{
   display:block;
   margin:-5.25px 0 -8px -8px;padding:8px;
@@ -175,6 +167,9 @@ ul{list-style:none;margin:0;padding:0}
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   max-width:100%;cursor:pointer;
 }
+/* Sin línea de calle, las coordenadas van pegadas al nombre y el hueco se
+   calcula contra el aire propio del nombre, no contra el de la calle. */
+.nom + .co{margin-top:-5.75px}
 .co:active{color:var(--text)}
 .co:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .co.done{color:var(--accent)}
@@ -198,8 +193,7 @@ ul{list-style:none;margin:0;padding:0}
 .go:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
 
 /* ── Separador de coincidencias aproximadas ───────────
-   Marca el punto exacto en el que se deja de leer literalmente lo tecleado.
-   Lo que hay debajo se parece a la búsqueda, no coincide con ella. */
+   Lo que hay debajo se parece a lo tecleado; no coincide con ello. */
 .sep{
   padding:15px var(--pad) 7px;
   font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
@@ -258,8 +252,7 @@ const Fuse = (function(){
   return module.exports;
 })();
 
-/* Datos generados desde data.md y calles.md por scripts/build.py — no editar
-   a mano. */
+/* Generado desde data.md por scripts/build.py. No editar a mano. */
 const LOCATIONS = __LOCATIONS__;
 const STREETS = __STREETS__;
 
@@ -306,14 +299,14 @@ const STREET_MIN_TERM = 3;
 
 /* Coincidencia aproximada: solo actúa cuando la búsqueda literal no devuelve
    nada, y nunca sobre números. Ver docs/02-datos.md. */
-const FUZZY_MIN_TERM = 3;    // con 1-2 caracteres cualquier cosa se parece a todo
-const FUZZY_MAX_SCORE = 0.6; // 0 = idéntico. Por encima ya no es una errata
+const FUZZY_MIN_TERM = 3;    // por debajo, cualquier nombre se parece al término
+const FUZZY_MAX_SCORE = 0.6; // 0 es idéntico; por encima ya no es una errata
 const FUZZY_MAX_RESULTS = 8;
 
 const FUZZY = {
   threshold: 0.4,
   ignoreLocation: true,   // la errata puede estar en cualquier parte del nombre
-  minMatchCharLength: 2,  // con 3 se pierde «pinpi» -> «El Pimpi»: comprobado
+  minMatchCharLength: 2,  // por encima, una errata parte la coincidencia y se pierde
   includeScore: true
 };
 
@@ -358,17 +351,13 @@ function streetUrl(st){
  * Filtra y ordena. Devuelve { streets, exact, approx }: cada grupo viaja
  * aparte porque en pantalla se presentan de forma distinta.
  *
- * Las calles solo aparecen escribiendo su nombre, que hoy no devolvía nada:
- * el índice de las ubicaciones no incluye la calle a propósito, porque
- * buscar «peñista» habría devuelto 44 resultados inútiles.
- *
- * Consulta numérica  → número exacto > número que empieza por > nombre que
- *   contiene el término. Nunca subcadena ni aproximación sobre el número:
- *   escribir 39 no puede devolver la 139, y un número inexistente debe dar
- *   lista vacía. Mandar la unidad a la ubicación equivocada es el único
- *   fallo grave que esta app puede cometer.
- * Consulta de texto  → nombre que empieza por > nombre que contiene. Si eso
- *   no da nada, y solo entonces, se ofrecen aproximaciones.
+ * Consulta numérica: número exacto, número que empieza por el término, y
+ *   nombre que lo contiene. Nunca subcadena ni aproximación sobre el número
+ *   —escribir 39 no puede devolver la 139— y un número inexistente devuelve
+ *   lista vacía. Llevar la unidad a la ubicación equivocada es el único fallo
+ *   grave que esta aplicación puede cometer.
+ * Consulta de texto: empieza por, contiene, y contiene una vez aplanado.
+ *   Solo si nada de eso devuelve resultados se ofrecen aproximaciones.
  */
 function search(raw){
   const term = normalize(raw);
@@ -393,8 +382,8 @@ function search(raw){
     ? []
     : STREETS.filter(st => st.flat.includes(flat));
 
-  // Tercer nivel literal: lo mismo pero sin espacios ni puntuación, para que
-  // teclear «c/pen» o «66 67» siga encontrando lo que existe.
+  // Tercer nivel literal: sin espacios ni puntuación, para que un separador
+  // de más o de menos no deje la pantalla vacía.
   const loose = [];
   for (const loc of LOCATIONS){
     const i = loc.search.indexOf(term);
@@ -450,6 +439,8 @@ function row(loc){
   nom.className = 'nom';
   nom.textContent = loc.name;
 
+  // La línea de la calle solo se pinta si hay calle: si no, la fila se queda
+  // en nombre y coordenadas, sin un hueco muerto en medio.
   const st = document.createElement('span');
   st.className = 'st';
   st.textContent = loc.street;
@@ -465,7 +456,9 @@ function row(loc){
 
   const txt = document.createElement('span');
   txt.className = 'txt';
-  txt.append(nom, st, co);
+  txt.append(nom);
+  if (loc.street) txt.append(st);
+  txt.append(co);
 
   const svg = icon('ico', PIN_BODY);
   const dot = document.createElementNS(NS, 'circle');
@@ -511,7 +504,9 @@ function streetRow(st){
 
   const sub = document.createElement('span');
   sub.className = 'st';
-  sub.textContent = TEXT.route + ' · ' + unit(st.count);
+  // El recuento solo aparece si la calle tiene ubicaciones asociadas: hay
+  // listados en los que la ubicación es la parcela y no pertenece a ninguna.
+  sub.textContent = st.count ? TEXT.route + ' · ' + unit(st.count) : TEXT.route;
 
   const txt = document.createElement('span');
   txt.className = 'txt';
